@@ -333,5 +333,23 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
+	
+	/**
+	 * Task25 未入力チェック
+	 * 未入力の勤怠件数を取得（当日より前、欠席除外、出退勤未入力）
+	 * 
+	 * @return 未入力件数（0件なら入力済み）
+	 */
+	//戻り値int型　未入力件数の数値を返している
+	public int getNotEnteredAttendanceCount() {
+		//MapperからnotEnterCountを呼び出し該当件数を取得
+		return tStudentAttendanceMapper.notEnterCount(
+				//ログインしているユーザのIDを対象に検索
+				loginUserDto.getLmsUserId(),
+				//削除されていないレコードを対象に
+				Constants.DB_FLG_FALSE,
+				//現在より前の時間を指定
+				new Date());
+	}
 
 }

@@ -40,12 +40,18 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
-	public String index(Model model) {
-
-		// 勤怠一覧の取得
-		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
-				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
+	public String index(Model model) {List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(
+				loginUserDto.getCourseId(),
+				loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
+
+		/**
+		*Task.25 未入力チェック(追加機能)
+		*/
+		//未入力件数を取得　１件以上でtrueを代入
+		boolean hasMissing = studentAttendanceService.getNotEnteredAttendanceCount() > 0;
+		//"hasMissingAttendance"としてtrue/falseを渡す
+		model.addAttribute("hasMissingAttendance", hasMissing);
 
 		return "attendance/detail";
 	}
