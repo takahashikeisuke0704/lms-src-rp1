@@ -20,6 +20,17 @@ public class DailyAttendanceForm {
 	private String trainingStartTime;
 	/** 退勤時間 */
 	private String trainingEndTime;
+	
+	// 追加：出勤時間の時分分解用
+	private Integer trainingStartHour;
+	private Integer trainingStartMinute;
+
+	// 追加：退勤時間の時分分解用
+	private Integer trainingEndHour;
+	private Integer trainingEndMinute;
+
+	
+	
 	/** 中抜け時間 */
 	private Integer blankTime;
 	/** 中抜け時間（画面表示用） */
@@ -46,5 +57,7 @@ public class DailyAttendanceForm {
 	private String courseName;
 	/** インデックス */
 	private String index;
+	
+	
 
 }

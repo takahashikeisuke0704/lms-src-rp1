@@ -65,6 +65,7 @@ public interface TStudentAttendanceMapper {
 	 */
 	//Task.25 未入力チェック
 	Boolean update(TStudentAttendance tStudentAttendance);
+	
 	// LMSユーザーID の勤怠データだけを対象に指定
 	int notEnterCount(@Param("lmsUserId") Integer lmsUserId,
 			//削除されていない勤怠レコードだけを対象

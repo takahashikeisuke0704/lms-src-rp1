@@ -77,12 +77,11 @@
 		$(function() {
 			
 			// ▼▼▼ 未入力アラート ▼▼▼
-        let hasMissing = /*[[${hasMissingAttendance} ? 'true' : 'false']]*/ false;
-        //trueならalertを表示。
-        if (hasMissing) {
-            alert("過去日の勤怠に未入力があります。");
-        }
-			
+        let hasMissing = Boolean(/*[[${hasMissingAttendance}]]*/ false);
+    if (hasMissing) {
+        alert("過去日の勤怠に未入力があります。");
+    }
+			// ▲▲▲ 未入力アラート ▲▲▲
 			$("#now").text('現在の時刻は　' + getClock() + '　です。');
 			setInterval(function() {
 				$("#now").text('現在の時刻は　' + getClock() + '　です。');

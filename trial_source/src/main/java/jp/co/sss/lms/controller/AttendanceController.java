@@ -40,20 +40,30 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
-	public String index(Model model) {List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(
-				loginUserDto.getCourseId(),
-				loginUserDto.getLmsUserId());
-		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
+	public String index(Model model) {
+	    // 勤怠情報一覧の取得
+	    List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(
+	            loginUserDto.getCourseId(),
+	            loginUserDto.getLmsUserId());
 
-		/**
-		*Task.25 未入力チェック(追加機能)
-		*/
-		//未入力件数を取得　１件以上でtrueを代入
-		boolean hasMissing = studentAttendanceService.getNotEnteredAttendanceCount() > 0;
-		//"hasMissingAttendance"としてtrue/falseを渡す
-		model.addAttribute("hasMissingAttendance", hasMissing);
+	    model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
-		return "attendance/detail";
+	    /**
+	     * Task.25 未入力チェック(追加機能)
+	     */
+	    // 未入力の件数を取得（現在時刻より前で、出退勤のどちらか未入力）
+	    int notEnteredCount = studentAttendanceService.getNotEnteredAttendanceCount();
+
+	    // ログ出力（開発・確認用）
+	    System.out.println("未入力勤怠件数: " + notEnteredCount); // または logger.info(...)
+
+	    // 未入力が1件以上あるかどうかを判定
+	    boolean hasMissing = notEnteredCount > 0;
+
+	    // 画面に渡す
+	    model.addAttribute("hasMissingAttendance", hasMissing);
+
+	    return "attendance/detail";
 	}
 
 	/**
