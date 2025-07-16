@@ -310,6 +310,8 @@ public class StudentAttendanceService {
 			tStudentAttendance.setAccountId(loginUserDto.getAccountId());
 			// 出勤時刻整形
 			// 出勤時刻を組み立て（nullチェックつき）
+			
+			//Task26 勤怠の編集　時間と分の分解を(HH:MM)形式に
 			String startTimeStr = "";
 			if (dailyAttendanceForm.getTrainingStartHour() != null && dailyAttendanceForm.getTrainingStartMinute() != null) {
 				startTimeStr = String.format("%02d:%02d", 
@@ -324,6 +326,8 @@ public class StudentAttendanceService {
 					dailyAttendanceForm.getTrainingEndHour(), dailyAttendanceForm.getTrainingEndMinute());
 			}
 			tStudentAttendance.setTrainingEndTime(endTimeStr);
+			
+			
 
 			// TrainingTimeクラスを使う必要があるなら（例えばステータス判定で）
 			TrainingTime trainingStartTime = new TrainingTime(startTimeStr);
@@ -369,10 +373,13 @@ public class StudentAttendanceService {
 	 */
 	//戻り値int型　未入力件数の数値を返している
 	public int getNotEnteredAttendanceCount() {
+		//MapperからEnteredAttendanceCount()を呼び出し該当件数を取得
 	    return tStudentAttendanceMapper.notEnterCount(
+	    		//ログインしているユーザーIDを対象に検索
 	            loginUserDto.getLmsUserId(),
+	            //削除されていないレコードを対象に
 	            Constants.DB_FLG_FALSE,
-	            new Date()  // 現在の時刻（00:00ではなくリアルタイム）
+	            new Date()  // 現在の時刻
 	    );
 	}
 

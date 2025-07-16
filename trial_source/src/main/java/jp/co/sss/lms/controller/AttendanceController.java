@@ -51,11 +51,11 @@ public class AttendanceController {
 	    /**
 	     * Task.25 未入力チェック(追加機能)
 	     */
-	    // 未入力の件数を取得（現在時刻より前で、出退勤のどちらか未入力）
+	    // 未入力の件数を取得（現在時刻より前で、出退勤のどちらか未入力のもの）
 	    int notEnteredCount = studentAttendanceService.getNotEnteredAttendanceCount();
 
-	    // ログ出力（開発・確認用）
-	    System.out.println("未入力勤怠件数: " + notEnteredCount); // または logger.info(...)
+	    // ログ出力（確認用）
+	    System.out.println("未入力勤怠件数: " + notEnteredCount); 
 
 	    // 未入力が1件以上あるかどうかを判定
 	    boolean hasMissing = notEnteredCount > 0;

@@ -54,41 +54,48 @@
 								</th:block>
 								<td class="w140">[[${dailyAttendanceForm.dispTrainingDate}]]</td>
 								<td class="w300">[[${dailyAttendanceForm.sectionName}]]</td>
-
-								<td class="w70">
-									<select th:name="|attendanceList[${stat.index}].trainingStartHour|"
-										class="form-control d-inline w50">
-										<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
-											th:text="${h + '時'}"
-											th:selected="${h == dailyAttendanceForm.trainingStartHour}">
-										</option>
-									</select> :
-									<select th:name="|attendanceList[${stat.index}].trainingStartMinute|"
-										class="form-control d-inline w50">
-										<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
-											th:text="${m + '分'}"
-											th:selected="${m == dailyAttendanceForm.trainingStartMinute}">
-										</option>
-									</select>
+								<!-- Task26 勤怠編集　時間と分 -->
+								<!-- 出勤時刻　編集欄 分解 -->
+								<td class="w100">
+									<div class="time-select-wrapper">
+										<select th:name="|attendanceList[${stat.index}].trainingStartHour|"
+											class="form-control">
+											<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
+												th:text="${h + '時'}"
+												th:selected="${h == dailyAttendanceForm.trainingStartHour}">
+											</option>
+										</select>
+										<select th:name="|attendanceList[${stat.index}].trainingStartMinute|"
+											class="form-control">
+											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
+												th:text="${m + '分'}"
+												th:selected="${m == dailyAttendanceForm.trainingStartMinute}">
+											</option>
+										</select>
+									</div>
 								</td>
-
-								<td class="w70">
-									<select th:name="|attendanceList[${stat.index}].trainingEndHour|"
-										class="form-control d-inline w50">
-										<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
-											th:text="${h + '時'}"
-											th:selected="${h == dailyAttendanceForm.trainingEndHour}">
-										</option>
-									</select> :
-									<select th:name="|attendanceList[${stat.index}].trainingEndMinute|"
-										class="form-control d-inline w50">
-										<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
-											th:text="${m + '分'}"
-											th:selected="${m == dailyAttendanceForm.trainingEndMinute}">
-										</option>
-									</select>
+								<!-- 出勤時刻　編集欄 分解ここまで -->
+								<!-- 退勤時刻　編集欄 分解 -->
+								<td class="w100">
+									<div class="time-select-wrapper">
+										<select th:name="|attendanceList[${stat.index}].trainingEndHour|"
+											class="form-control">
+											<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
+												th:text="${h + '時'}"
+												th:selected="${h == dailyAttendanceForm.trainingEndHour}">
+											</option>
+										</select>
+										<select th:name="|attendanceList[${stat.index}].trainingEndMinute|"
+											class="form-control">
+											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
+												th:text="${m + '分'}"
+												th:selected="${m == dailyAttendanceForm.trainingEndMinute}">
+											</option>
+										</select>
+									</div>
 								</td>
-
+								<!-- 退勤時刻　編集欄 分解ここまで -->
+								<!-- Task26 勤怠編集　時間と分　ここまで -->
 								<td class="w80">
 									<select th:name="|attendanceList[${stat.index}].blankTime|" class="form-control">
 										<option th:each="blankTime : ${attendanceForm.blankTimes}"

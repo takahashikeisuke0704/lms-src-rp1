@@ -1704,3 +1704,37 @@ html, body {
 	float: left;
 	width: 50%;
 }
+
+/* 時間と分の配置 */
+.time-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* スペース調整 */
+}
+
+.time-select-wrapper select {
+  border-radius: 0;
+  border-right: none;
+  width: 60px;
+  text-align: center;
+}
+
+.time-select-wrapper select:last-child {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.time-select-wrapper::after {
+  content: '';
+  display: none;
+}
+/* 時間と分の配置ここまで */
+
+/* 選択した時間と矢印の重なり防止 */
+.time-select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;charset=US-ASCII,<svg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center;
+  background-size: 12px;
+}
