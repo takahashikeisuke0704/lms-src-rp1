@@ -1715,7 +1715,7 @@ html, body {
 .time-select-wrapper select {
   border-radius: 0;
   border-right: none;
-  width: 60px;
+  width: 70px;
   text-align: center;
 }
 
@@ -1729,12 +1729,3 @@ html, body {
   display: none;
 }
 /* 時間と分の配置ここまで */
-
-/* 選択した時間と矢印の重なり防止 */
-.time-select-wrapper select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url("data:image/svg+xml;charset=US-ASCII,<svg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center;
-  background-size: 12px;
-}
