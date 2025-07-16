@@ -66,6 +66,7 @@
 												th:selected="${h == dailyAttendanceForm.trainingStartHour}">
 											</option>
 										</select>
+										<span class="mx-1">:</span>
 										<select th:name="|attendanceList[${stat.index}].trainingStartMinute|"
 											class="form-control">
 											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
@@ -86,6 +87,7 @@
 												th:selected="${h == dailyAttendanceForm.trainingEndHour}">
 											</option>
 										</select>
+										<span class="mx-1">:</span>
 										<select th:name="|attendanceList[${stat.index}].trainingEndMinute|"
 											class="form-control">
 											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
