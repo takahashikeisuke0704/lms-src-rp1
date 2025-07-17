@@ -21,11 +21,11 @@ public class DailyAttendanceForm {
 	/** 退勤時間 */
 	private String trainingEndTime;
 	
-	// 追加：出勤時間の時分分解用
+	// Task26：出勤時間の時分分解用
 	private Integer trainingStartHour;
 	private Integer trainingStartMinute;
 
-	// 追加：退勤時間の時分分解用
+	// Task26：退勤時間の時分分解用
 	private Integer trainingEndHour;
 	private Integer trainingEndMinute;
 

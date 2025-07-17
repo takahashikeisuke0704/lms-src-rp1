@@ -56,7 +56,7 @@
 								<td class="w300">[[${dailyAttendanceForm.sectionName}]]</td>
 								
 								<!-- Task26 勤怠編集　時間と分 -->
-								<!-- 出勤時刻　編集欄 分解 -->
+								<!-- 出勤時刻　編集欄  -->
 								<td class="w100">
 									<div class="time-select-wrapper">
 										<select th:name="|attendanceList[${stat.index}].trainingStartHour|"
@@ -131,6 +131,9 @@
 			</form>
 		</div>
 	</div>
+
+<!-- jsを読み込むためのタグ -->
+<script src="/js/AttendanceInputCheck.js"></script>
 
 </body>
 
