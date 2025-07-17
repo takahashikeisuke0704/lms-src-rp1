@@ -1713,19 +1713,7 @@ html, body {
 }
 
 .time-select-wrapper select {
-  border-radius: 0;
-  border-right: none;
   width: 70px;
   text-align: center;
-}
-
-.time-select-wrapper select:last-child {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.time-select-wrapper::after {
-  content: '';
-  display: none;
 }
 /* 時間と分の配置ここまで */
