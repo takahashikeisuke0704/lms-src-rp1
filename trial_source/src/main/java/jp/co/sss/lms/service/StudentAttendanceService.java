@@ -308,23 +308,23 @@ public class StudentAttendanceService {
 			}
 			tStudentAttendance.setLmsUserId(lmsUserId);
 			tStudentAttendance.setAccountId(loginUserDto.getAccountId());
-			// 出勤時刻整形
-			// 出勤時刻を組み立て（nullチェックつき）
 			
+			// 出勤時刻整形
+			// 出勤時刻を			
 			//Task26 勤怠の編集　時間と分の分解を(HH:MM)形式に
 			String startTimeStr = "";
-			if (dailyAttendanceForm.getTrainingStartHour() != null && dailyAttendanceForm.getTrainingStartMinute() != null) {
+			
 				startTimeStr = String.format("%02d:%02d", 
 					dailyAttendanceForm.getTrainingStartHour(), dailyAttendanceForm.getTrainingStartMinute());
-			}
+			
 			tStudentAttendance.setTrainingStartTime(startTimeStr);
 
-			// 退勤時刻を組み立て（nullチェックつき）
+			// 退勤時刻
 			String endTimeStr = "";
-			if (dailyAttendanceForm.getTrainingEndHour() != null && dailyAttendanceForm.getTrainingEndMinute() != null) {
+			
 				endTimeStr = String.format("%02d:%02d", 
 					dailyAttendanceForm.getTrainingEndHour(), dailyAttendanceForm.getTrainingEndMinute());
-			}
+			
 			tStudentAttendance.setTrainingEndTime(endTimeStr);
 			
 			

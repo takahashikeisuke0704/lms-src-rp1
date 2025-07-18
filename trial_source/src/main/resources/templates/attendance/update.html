@@ -54,23 +54,29 @@
 								</th:block>
 								<td class="w140">[[${dailyAttendanceForm.dispTrainingDate}]]</td>
 								<td class="w300">[[${dailyAttendanceForm.sectionName}]]</td>
-								
+
 								<!-- Task26 勤怠編集　時間と分 -->
+								<!-- 出勤時刻　編集欄  -->
 								<!-- 出勤時刻　編集欄  -->
 								<td class="w100">
 									<div class="time-select-wrapper">
 										<select th:name="|attendanceList[${stat.index}].trainingStartHour|"
 											class="form-control">
+											<option value=""
+												th:selected="${dailyAttendanceForm.trainingStartHour == null}"></option>
 											<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
-												th:text="${#numbers.formatInteger(h, 2)}"
+												th:text="${h < 10 ? '0' + h : h}"
 												th:selected="${h == dailyAttendanceForm.trainingStartHour}">
 											</option>
 										</select>
 										<span class="mx-1">:</span>
 										<select th:name="|attendanceList[${stat.index}].trainingStartMinute|"
 											class="form-control">
+											<option value=""
+												th:selected="${dailyAttendanceForm.trainingStartMinute == null}">
+											</option>
 											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
-												th:text="${#numbers.formatInteger(m, 2)}"
+												th:text="${m < 10 ? '0' + m : m}"
 												th:selected="${m == dailyAttendanceForm.trainingStartMinute}">
 											</option>
 										</select>
@@ -78,26 +84,30 @@
 								</td>
 								<!-- 出勤時刻 編集欄ここまで -->
 								<!-- 退勤時刻 編集欄 -->
+								<!-- 退勤時刻 編集欄 -->
 								<td class="w100">
 									<div class="time-select-wrapper">
 										<select th:name="|attendanceList[${stat.index}].trainingEndHour|"
 											class="form-control">
+											<option value=""
+												th:selected="${dailyAttendanceForm.trainingEndHour == null}"></option>
 											<option th:each="h : ${#numbers.sequence(0, 23)}" th:value="${h}"
-												th:text="${#numbers.formatInteger(h, 2)}"
+												th:text="${h < 10 ? '0' + h : h}"
 												th:selected="${h == dailyAttendanceForm.trainingEndHour}">
 											</option>
 										</select>
 										<span class="mx-1">:</span>
 										<select th:name="|attendanceList[${stat.index}].trainingEndMinute|"
 											class="form-control">
+											<option value=""
+												th:selected="${dailyAttendanceForm.trainingEndMinute == null}"></option>
 											<option th:each="m : ${#numbers.sequence(0, 59)}" th:value="${m}"
-												th:text="${#numbers.formatInteger(m, 2)}"
+												th:text="${m < 10 ? '0' + m : m}"
 												th:selected="${m == dailyAttendanceForm.trainingEndMinute}">
 											</option>
 										</select>
 									</div>
 								</td>
-
 								<!-- 退勤時刻　編集欄 ここまで -->
 								<!-- Task26 勤怠編集　時間と分　ここまで -->
 								<td class="w80">
@@ -132,8 +142,8 @@
 		</div>
 	</div>
 
-<!-- jsを読み込むためのタグ -->
-<script src="/js/AttendanceInputCheck.js"></script>
+	<!-- jsを読み込むためのタグ -->
+	<script src="/js/AttendanceInputCheck.js"></script>
 
 </body>
 
