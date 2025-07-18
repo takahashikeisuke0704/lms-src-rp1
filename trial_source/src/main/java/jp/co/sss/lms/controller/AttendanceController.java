@@ -148,6 +148,14 @@ public class AttendanceController {
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
+		
+		 // バリデーションエラーがあったら更新処理はせずに画面に戻す
+	    if (result.hasErrors()) {
+	        model.addAttribute("attendanceForm", attendanceForm);
+	        return "attendance/update"; // 入力画面へ戻る
+	    }
+	    
+	    
 
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);

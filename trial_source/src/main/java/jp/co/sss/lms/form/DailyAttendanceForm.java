@@ -1,5 +1,6 @@
 package jp.co.sss.lms.form;
 
+import jp.co.sss.lms.util.AttendanceUpdateValidation;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @author 東京ITスクール
  */
 @Data
+@AttendanceUpdateValidation //独自アノテーションクラス
 public class DailyAttendanceForm {
 
 	/** 受講生勤怠ID */
