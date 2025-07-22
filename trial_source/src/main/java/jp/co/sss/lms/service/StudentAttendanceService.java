@@ -238,7 +238,7 @@ public class StudentAttendanceService {
 			dailyAttendanceForm
 					.setTrainingStartTime(attendanceManagementDto.getTrainingStartTime());
 			dailyAttendanceForm.setTrainingEndTime(attendanceManagementDto.getTrainingEndTime());
-			
+
 			if (attendanceManagementDto.getTrainingStartTime() != null
 					&& attendanceManagementDto.getTrainingStartTime().contains(":")) {
 				String[] startParts = attendanceManagementDto.getTrainingStartTime().split(":");
@@ -252,7 +252,7 @@ public class StudentAttendanceService {
 				dailyAttendanceForm.setTrainingEndHour(Integer.parseInt(endParts[0]));
 				dailyAttendanceForm.setTrainingEndMinute(Integer.parseInt(endParts[1]));
 			}
-			
+
 			if (attendanceManagementDto.getBlankTime() != null) {
 				dailyAttendanceForm.setBlankTime(attendanceManagementDto.getBlankTime());
 				dailyAttendanceForm.setBlankTimeValue(String.valueOf(
@@ -308,27 +308,27 @@ public class StudentAttendanceService {
 			}
 			tStudentAttendance.setLmsUserId(lmsUserId);
 			tStudentAttendance.setAccountId(loginUserDto.getAccountId());
-			
-			// 出勤時刻整形
-			// 出勤時刻を			
+		
 			//Task26 勤怠の編集　時間と分の分解を(HH:MM)形式に
-			String startTimeStr = "";
-			
-				startTimeStr = String.format("%02d:%02d", 
-					dailyAttendanceForm.getTrainingStartHour(), dailyAttendanceForm.getTrainingStartMinute());
-			
+			// 出勤時刻
+			String startTimeStr = null;
+			Integer startHour = dailyAttendanceForm.getTrainingStartHour();
+			Integer startMinute = dailyAttendanceForm.getTrainingStartMinute();
+			if (startHour != null && startMinute != null) {
+			    startTimeStr = String.format("%02d:%02d", startHour, startMinute);
+			}
 			tStudentAttendance.setTrainingStartTime(startTimeStr);
 
 			// 退勤時刻
-			String endTimeStr = "";
-			
-				endTimeStr = String.format("%02d:%02d", 
-					dailyAttendanceForm.getTrainingEndHour(), dailyAttendanceForm.getTrainingEndMinute());
-			
+			String endTimeStr = null;
+			Integer endHour = dailyAttendanceForm.getTrainingEndHour();
+			Integer endMinute = dailyAttendanceForm.getTrainingEndMinute();
+			if (endHour != null && endMinute != null) {
+			    endTimeStr = String.format("%02d:%02d", endHour, endMinute);
+			}
 			tStudentAttendance.setTrainingEndTime(endTimeStr);
+			//Task26 勤怠の編集 ここまで
 			
-			
-
 			// TrainingTimeクラスを使う必要があるなら（例えばステータス判定で）
 			TrainingTime trainingStartTime = new TrainingTime(startTimeStr);
 			TrainingTime trainingEndTime = new TrainingTime(endTimeStr);
@@ -364,7 +364,7 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
-	
+
 	/**
 	 * Task25 未入力チェック
 	 * 未入力の勤怠件数を取得（当日より前、欠席除外、出退勤未入力）
@@ -374,13 +374,13 @@ public class StudentAttendanceService {
 	//戻り値int型　未入力件数の数値を返している
 	public int getNotEnteredAttendanceCount() {
 		//MapperからEnteredAttendanceCount()を呼び出し該当件数を取得
-	    return tStudentAttendanceMapper.notEnterCount(
-	    		//ログインしているユーザーIDを対象に検索
-	            loginUserDto.getLmsUserId(),
-	            //削除されていないレコードを対象に
-	            Constants.DB_FLG_FALSE,
-	            new Date()  // 現在の時刻
-	    );
+		return tStudentAttendanceMapper.notEnterCount(
+				//ログインしているユーザーIDを対象に検索
+				loginUserDto.getLmsUserId(),
+				//削除されていないレコードを対象に
+				Constants.DB_FLG_FALSE,
+				new Date() // 現在の時刻
+		);
 	}
 
 }

@@ -63,10 +63,17 @@ public interface TStudentAttendanceMapper {
 	 * @param tStudentAttendance
 	 * @return 更新結果
 	 */
-	//Task.25 未入力チェック
 	Boolean update(TStudentAttendance tStudentAttendance);
 	
-	// LMSユーザーID の勤怠データだけを対象に指定
+	/**	
+	 * Task.25 未入力チェック
+	 *  LMSユーザーID の勤怠データだけを対象に指定
+	 * 
+	 * @param lmsUserId
+	 * @param deleteFlg
+	 * @param trainingDate
+	 * @return
+	 */
 	int notEnterCount(@Param("lmsUserId") Integer lmsUserId,
 			//削除されていない勤怠レコードだけを対象
             @Param("deleteFlg") Short deleteFlg,
