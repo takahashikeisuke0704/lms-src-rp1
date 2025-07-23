@@ -10,7 +10,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 /**
- * 検証クラス
+ * アノテーションクラス
  */
 @Documented
 @Constraint(validatedBy = AttendanceUpdateUtil.class)

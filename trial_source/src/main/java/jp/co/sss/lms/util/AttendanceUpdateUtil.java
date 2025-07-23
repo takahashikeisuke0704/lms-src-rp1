@@ -4,34 +4,37 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jp.co.sss.lms.form.DailyAttendanceForm;
 
+/**
+ * 検証クラス
+ */
 public class AttendanceUpdateUtil implements ConstraintValidator<AttendanceUpdateValidation, DailyAttendanceForm> {
 
-    @Override
-    public boolean isValid(DailyAttendanceForm form, ConstraintValidatorContext context) {
-        boolean valid = true;
+	@Override
+	public boolean isValid(DailyAttendanceForm form, ConstraintValidatorContext context) {
+	    // 勤怠が完全に未入力ならスキップ（null許容）
+	    if (form.getTrainingStartHour() == null && form.getTrainingStartMinute() == null &&
+	        form.getTrainingEndHour() == null && form.getTrainingEndMinute() == null) {
+	        return true;
+	    }
 
-        // 出勤時刻：時間と分の両方が入っていない場合はNG
-        if ((form.getTrainingStartHour() != null && form.getTrainingStartMinute() == null) ||
-            (form.getTrainingStartHour() == null && form.getTrainingStartMinute() != null)) {
+	    // 出勤時刻が一部だけ入力された場合
+	    if ((form.getTrainingStartHour() != null && form.getTrainingStartMinute() == null) ||
+	        (form.getTrainingStartHour() == null && form.getTrainingStartMinute() != null)) {
+	        context.disableDefaultConstraintViolation();
+	        context.buildConstraintViolationWithTemplate("出勤時間が正しく入力されていません。")
+	               .addPropertyNode("trainingStartHour").addConstraintViolation();
+	        return false;
+	    }
 
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("出勤時間が正しく入力されていません。")
-                   .addBeanNode()  // リスト要素全体にエラーを付与
-                   .addConstraintViolation();
-            valid = false;
-        }
+	    // 退勤時刻が一部だけ入力された場合
+	    if ((form.getTrainingEndHour() != null && form.getTrainingEndMinute() == null) ||
+	        (form.getTrainingEndHour() == null && form.getTrainingEndMinute() != null)) {
+	        context.disableDefaultConstraintViolation();
+	        context.buildConstraintViolationWithTemplate("退勤時間が正しく入力されていません")
+	               .addPropertyNode("trainingEndHour").addConstraintViolation();
+	        return false;
+	    }
 
-        // 退勤時刻：時間と分の両方が入っていない場合はNG
-        if ((form.getTrainingEndHour() != null && form.getTrainingEndMinute() == null) ||
-            (form.getTrainingEndHour() == null && form.getTrainingEndMinute() != null)) {
-
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("退勤時間が正しく入力されていません。")
-                   .addBeanNode()  // リスト要素全体にエラーを付与
-                   .addConstraintViolation();
-            valid = false;
-        }
-
-        return valid;
-    }
-}
+	    // 全て正しく入力 or 両方未入力
+	    return true;
+	}}

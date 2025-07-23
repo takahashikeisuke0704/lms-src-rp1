@@ -96,6 +96,7 @@ public class StudentAttendanceService {
 		switch (attendanceType) {
 		case Constants.CODE_VAL_ATWORK:
 			if (tStudentAttendance != null
+					&& tStudentAttendance.getTrainingStartTime() != null
 					&& !tStudentAttendance.getTrainingStartTime().equals("")) {
 				// 本日の勤怠情報は既に入力されています。直接編集してください。
 				return messageUtil.getMessage(Constants.VALID_KEY_ATTENDANCE_PUNCHALREADYEXISTS);
@@ -103,11 +104,15 @@ public class StudentAttendanceService {
 			break;
 		case Constants.CODE_VAL_LEAVING:
 			if (tStudentAttendance == null
+					|| tStudentAttendance.getTrainingStartTime() == null
 					|| tStudentAttendance.getTrainingStartTime().equals("")) {
 				// 出勤情報がないため退勤情報を入力出来ません。
 				return messageUtil.getMessage(Constants.VALID_KEY_ATTENDANCE_PUNCHINEMPTY);
 			}
-			if (!tStudentAttendance.getTrainingEndTime().equals("")) {
+			
+			if (tStudentAttendance.getTrainingEndTime() != null 
+					//String.equals() を呼ぶ前に例外を呼んでしまうため null チェックを入れる
+				    && !tStudentAttendance.getTrainingEndTime().equals("")) {
 				// 本日の勤怠情報は既に入力されています。直接編集してください。
 				return messageUtil.getMessage(Constants.VALID_KEY_ATTENDANCE_PUNCHALREADYEXISTS);
 			}

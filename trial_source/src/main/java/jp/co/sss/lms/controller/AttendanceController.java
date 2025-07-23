@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.validation.Valid;
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
 import jp.co.sss.lms.form.AttendanceForm;
@@ -42,27 +42,27 @@ public class AttendanceController {
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
 	public String index(Model model) {
-	    // 勤怠情報一覧の取得
-	    List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(
-	            loginUserDto.getCourseId(),
-	            loginUserDto.getLmsUserId());
+		// 勤怠情報一覧の取得
+		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(
+				loginUserDto.getCourseId(),
+				loginUserDto.getLmsUserId());
 
-	    model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
+		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
-	    //Task.25 未入力チェック(追加機能)
-	    // 未入力の件数を取得（現在時刻より前で、出退勤のどちらか未入力のもの）
-	    int notEnteredCount = studentAttendanceService.getNotEnteredAttendanceCount();
+		//Task.25 未入力チェック(追加機能)
+		// 未入力の件数を取得（現在時刻より前で、出退勤のどちらか未入力のもの）
+		int notEnteredCount = studentAttendanceService.getNotEnteredAttendanceCount();
 
-	    // ログ出力（確認用）
-	    System.out.println("未入力勤怠件数: " + notEnteredCount); 
+		// ログ出力（確認用）
+		System.out.println("未入力勤怠件数: " + notEnteredCount);
 
-	    // 未入力が1件以上あるかどうかを判定
-	    boolean hasMissing = notEnteredCount > 0;
+		// 未入力が1件以上あるかどうかを判定
+		boolean hasMissing = notEnteredCount > 0;
 
-	    // 画面に渡す
-	    model.addAttribute("hasMissingAttendance", hasMissing);
+		// 画面に渡す
+		model.addAttribute("hasMissingAttendance", hasMissing);
 
-	    return "attendance/detail";
+		return "attendance/detail";
 	}
 
 	/**
@@ -145,16 +145,14 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
-	public String complete(@Validated AttendanceForm attendanceForm, Model model, BindingResult result)
+	public String complete(@Valid AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
-		
-		 // バリデーションエラーがあったら更新処理はせずに画面に戻す
-	    if (result.hasErrors()) {
-	        model.addAttribute("attendanceForm", attendanceForm);
-	        return "attendance/update"; // 入力画面へ戻る
-	    }
-	    
-	    
+
+		// 追加:Task27
+		if (result.hasErrors()) {
+			model.addAttribute("attendanceForm", attendanceForm);
+			return "attendance/update";
+		}
 
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);
@@ -166,7 +164,5 @@ public class AttendanceController {
 
 		return "attendance/detail";
 	}
-	
-	
 
 }
